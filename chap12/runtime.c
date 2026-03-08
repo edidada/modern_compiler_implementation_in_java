@@ -1,5 +1,8 @@
 #undef __STDC__
 #include <stdio.h>
+#include <stdlib.h>
+
+extern int tigermain(int);
 
 
 int *initArray(int size, int init)
@@ -102,7 +105,7 @@ int not(int i)
 
 #undef getchar
 
-struct string *getchar()
+struct string *getChar()
 {int i=getc(stdin);
  if (i==EOF) return &empty;
  else return consts+i;
