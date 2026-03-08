@@ -1,6 +1,6 @@
 package com.example.chap7.Tree;
-import com.example.chap7.Temp.Temp;
-import com.example.chap7.Temp.Label;
+import com.example.chap6.Temp.Temp;
+import com.example.chap6.Temp.Label;
 public class SEQ extends Stm {
   public Stm left, right;
   public SEQ(Stm l, Stm r) { left=l; right=r; }

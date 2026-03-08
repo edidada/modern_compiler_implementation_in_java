@@ -1,13 +1,16 @@
 package com.example.chap7.Tree;
 
+import com.example.chap6.Temp.TempMap;
+import com.example.chap6.Temp.DefaultMap;
+
 public class Print {
 
   java.io.PrintStream out;
-  Temp.TempMap tmap;
+  TempMap tmap;
 
-  public Print(java.io.PrintStream o, Temp.TempMap t) {out=o; tmap=t;}
+  public Print(java.io.PrintStream o, TempMap t) {out=o; tmap=t;}
 
-  public Print(java.io.PrintStream o) {out=o; tmap=new Temp.DefaultMap();}
+  public Print(java.io.PrintStream o) {out=o; tmap=new DefaultMap();}
 
   void indent(int d) {
       for(int i=0; i<d; i++) 
@@ -22,20 +25,20 @@ public class Print {
 	say(s); say("\n");
   }
 
-  void prStm(SEQ s, int d) {
+  void prStmSeq(SEQ s, int d) {
       indent(d); sayln("SEQ("); prStm(s.left,d+1); sayln(",");
       prStm(s.right,d+1); say(")");
   }
 
-  void prStm(LABEL s, int d) {
+  void prStmLabel(LABEL s, int d) {
       indent(d); say("LABEL "); say(s.label.toString());
   }
 
-  void prStm(JUMP s, int d) {
+  void prStmJump(JUMP s, int d) {
       indent(d); sayln("JUMP("); prExp(s.exp, d+1); say(")");
   }
 
-  void prStm(CJUMP s, int d) {
+  void prStmCjump(CJUMP s, int d) {
       indent(d); say("CJUMP("); 
       switch(s.relop) {
         case CJUMP.EQ: say("EQ"); break;
@@ -57,26 +60,26 @@ public class Print {
        say(s.iffalse.toString()); say(")");
   }
 
-  void prStm(MOVE s, int d) {
+  void prStmMove(MOVE s, int d) {
      indent(d); sayln("MOVE("); prExp(s.dst,d+1); sayln(","); 
            prExp(s.src,d+1); say(")");
   }
 
-  void prStm(EXP s, int d) {
+  void prStmExp(ExpStmt s, int d) {
      indent(d); sayln("EXP("); prExp(s.exp,d+1); say(")"); 
   }
 
   void prStm(Stm s, int d) {
-        if (s instanceof SEQ) prStm((SEQ)s, d);
-   else if (s instanceof LABEL) prStm((LABEL)s, d);
-   else if (s instanceof JUMP) prStm((JUMP)s, d);
-   else if (s instanceof CJUMP) prStm((CJUMP)s, d);
-   else if (s instanceof MOVE) prStm((MOVE)s, d);
-   else if (s instanceof EXP) prStm((EXP)s, d);
+        if (s instanceof SEQ) prStmSeq((SEQ)s, d);
+   else if (s instanceof LABEL) prStmLabel((LABEL)s, d);
+   else if (s instanceof JUMP) prStmJump((JUMP)s, d);
+   else if (s instanceof CJUMP) prStmCjump((CJUMP)s, d);
+   else if (s instanceof MOVE) prStmMove((MOVE)s, d);
+   else if (s instanceof ExpStmt) prStmExp((ExpStmt)s, d);
    else throw new Error("Print.prStm");
   }
 
-  void prExp(BINOP e, int d) {
+  void prExpBinop(BINOP e, int d) {
      indent(d); say("BINOP("); 
       switch(e.binop) {
 	case BINOP.PLUS: say("PLUS"); break;
@@ -96,31 +99,31 @@ public class Print {
       prExp(e.left,d+1); sayln(","); prExp(e.right,d+1); say(")");
    }
 
-  void prExp(MEM e, int d) {
+  void prExpMem(MEM e, int d) {
      indent(d);
 	sayln("MEM("); prExp(e.exp,d+1); say(")");
   }
 
-  void prExp(TEMP e, int d) {
+  void prExpTemp(TEMP e, int d) {
      indent(d); say("TEMP "); 
      say(tmap.tempMap(e.temp));
   }
 
-  void prExp(ESEQ e, int d) {
+  void prExpEseq(ESEQ e, int d) {
      indent(d); sayln("ESEQ("); prStm(e.stm,d+1); sayln(",");
 	prExp(e.exp,d+1); say(")");
 
   }
 
-  void prExp(NAME e, int d) {
+  void prExpName(NAME e, int d) {
      indent(d); say("NAME "); say(e.label.toString());
   }
 
-  void prExp(CONST e, int d) {
+  void prExpConst(CONST e, int d) {
      indent(d); say("CONST "); say(String.valueOf(e.value));
   }
 
-  void prExp(CALL e, int d) {
+  void prExpCall(CALL e, int d) {
      indent(d); sayln("CALL(");
 	prExp(e.func,d+1);
         for(ExpList a = e.args; a!=null; a=a.tail) {
@@ -130,13 +133,13 @@ public class Print {
   }
 
   void prExp(Exp e, int d) {
-        if (e instanceof BINOP) prExp((BINOP)e, d);
-   else if (e instanceof MEM) prExp((MEM)e, d);
-   else if (e instanceof TEMP) prExp((TEMP)e, d);
-   else if (e instanceof ESEQ) prExp((ESEQ)e, d);
-   else if (e instanceof NAME) prExp((NAME)e, d);
-   else if (e instanceof CONST) prExp((CONST)e, d);
-   else if (e instanceof CALL) prExp((CALL)e, d);
+        if (e instanceof BINOP) prExpBinop((BINOP)e, d);
+   else if (e instanceof MEM) prExpMem((MEM)e, d);
+   else if (e instanceof TEMP) prExpTemp((TEMP)e, d);
+   else if (e instanceof ESEQ) prExpEseq((ESEQ)e, d);
+   else if (e instanceof NAME) prExpName((NAME)e, d);
+   else if (e instanceof CONST) prExpConst((CONST)e, d);
+   else if (e instanceof CALL) prExpCall((CALL)e, d);
    else throw new Error("Print.prExp");
   }
 

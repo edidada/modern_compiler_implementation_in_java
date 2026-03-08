@@ -1,6 +1,6 @@
 package com.example.chap7.Tree;
-import com.example.chap7.Temp.Temp;
-import com.example.chap7.Temp.Label;
+import com.example.chap6.Temp.Temp;
+import com.example.chap6.Temp.Label;
 public class MOVE extends Stm {
   public Exp dst, src;
   public MOVE(Exp d, Exp s) {dst=d; src=s;}
