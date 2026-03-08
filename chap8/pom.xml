@@ -13,4 +13,17 @@
 
     <artifactId>chap8</artifactId>
     <name>Chapter 8 - Basic Blocks and Traces</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap7</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap6</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

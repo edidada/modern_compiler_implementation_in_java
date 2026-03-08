@@ -35,11 +35,11 @@ public class Node {
     public int degree() {return inDegree()+outDegree();} 
 
     public boolean goesTo(Node n) {
-	return com.example.chap10.Graph.inList(n, succ());
+	return Graph.inList(n, succ());
     }
 
     public boolean comesFrom(Node n) {
-	return com.example.chap10.Graph.inList(n, pred());
+	return Graph.inList(n, pred());
     }
 
     public boolean adj(Node n) {

@@ -1,26 +1,34 @@
 package com.example.chap8.Canon;
 
+import com.example.chap6.Temp.Temp;
+import com.example.chap6.Temp.Label;
+import com.example.chap7.Tree.Stm;
+import com.example.chap7.Tree.StmList;
+import com.example.chap7.Tree.JUMP;
+import com.example.chap7.Tree.CJUMP;
+import com.example.chap7.Tree.LABEL;
+
 public class TraceSchedule {
 
-  public com.example.chap7.Tree.StmList stms;
+  public StmList stms;
   BasicBlocks theBlocks;
   java.util.Dictionary table = new java.util.Hashtable();
 
-  com.example.chap7.Tree.StmList getLast(com.example.chap7.Tree.StmList block) {
-     com.example.chap7.Tree.StmList l=block;
+  StmList getLast(StmList block) {
+     StmList l=block;
      while (l.tail.tail!=null)  l=l.tail;
      return l;
   }
 
-  void trace(com.example.chap7.Tree.StmList l) {
+  void trace(StmList l) {
    for(;;) {
-     com.example.chap7.Tree.LABEL lab = (com.example.chap7.Tree.LABEL)l.head;
+     LABEL lab = (LABEL)l.head;
      table.remove(lab.label);
-     com.example.chap7.Tree.StmList last = getLast(l);
-     com.example.chap7.Tree.Stm s = last.tail.head;
-     if (s instanceof com.example.chap7.Tree.JUMP) {
-	com.example.chap7.Tree.JUMP j = (com.example.chap7.Tree.JUMP)s;
-        com.example.chap7.Tree.StmList target = (com.example.chap7.Tree.StmList)table.get(j.targets.head);
+     StmList last = getLast(l);
+     Stm s = last.tail.head;
+     if (s instanceof JUMP) {
+	JUMP j = (JUMP)s;
+        StmList target = (StmList)table.get(j.targets.head);
 	if (j.targets.tail==null && target!=null) {
                last.tail=target;
 	       l=target;
@@ -30,28 +38,28 @@ public class TraceSchedule {
 	  return;
         }
      }
-     else if (s instanceof com.example.chap7.Tree.CJUMP) {
-	com.example.chap7.Tree.CJUMP j = (com.example.chap7.Tree.CJUMP)s;
-        com.example.chap7.Tree.StmList t = (com.example.chap7.Tree.StmList)table.get(j.iftrue);
-        com.example.chap7.Tree.StmList f = (com.example.chap7.Tree.StmList)table.get(j.iffalse);
+     else if (s instanceof CJUMP) {
+	CJUMP j = (CJUMP)s;
+        StmList t = (StmList)table.get(j.iftrue);
+        StmList f = (StmList)table.get(j.iffalse);
         if (f!=null) {
 	  last.tail.tail=f; 
 	  l=f;
 	}
         else if (t!=null) {
-	  last.tail.head=new com.example.chap7.Tree.CJUMP(com.example.chap7.Tree.CJUMP.notRel(j.relop),
-					j.left,j.right,
-					j.iffalse,j.iftrue);
+	  last.tail.head=new CJUMP(CJUMP.notRel(j.relop),
+				j.left,j.right,
+				j.iffalse,j.iftrue);
 	  last.tail.tail=t;
 	  l=t;
         }
         else {
-	  Temp.Label ff = new Temp.Label();
-	  last.tail.head=new com.example.chap7.Tree.CJUMP(j.relop,j.left,j.right,
-					j.iftrue,ff);
-	  last.tail.tail=new com.example.chap7.Tree.StmList(new com.example.chap7.Tree.LABEL(ff),
-		           new com.example.chap7.Tree.StmList(new com.example.chap7.Tree.JUMP(j.iffalse),
-					    getNext()));
+	  Label ff = new Label();
+	  last.tail.head=new CJUMP(j.relop,j.left,j.right,
+				j.iftrue,ff);
+	  last.tail.tail=new StmList(new LABEL(ff),
+		           new StmList(new JUMP(j.iffalse),
+				    getNext()));
 	  return;
         }
      }
@@ -59,12 +67,12 @@ public class TraceSchedule {
     }
   }
 
-  com.example.chap7.Tree.StmList getNext() {
+  StmList getNext() {
       if (theBlocks.blocks==null) 
-	return new com.example.chap7.Tree.StmList(new com.example.chap7.Tree.LABEL(theBlocks.done), null);
+	return new StmList(new LABEL(theBlocks.done), null);
       else {
-	 com.example.chap7.Tree.StmList s = theBlocks.blocks.head;
-	 com.example.chap7.Tree.LABEL lab = (com.example.chap7.Tree.LABEL)s.head;
+	 StmList s = theBlocks.blocks.head;
+	 LABEL lab = (LABEL)s.head;
 	 if (table.get(lab.label) != null) {
           trace(s);
 	  return s;
@@ -79,7 +87,7 @@ public class TraceSchedule {
   public TraceSchedule(BasicBlocks b) {
     theBlocks=b;
     for(StmListList l = b.blocks; l!=null; l=l.tail)
-       table.put(((com.example.chap7.Tree.LABEL)l.head.head).label, l.head);
+       table.put(((LABEL)l.head.head).label, l.head);
     stms=getNext();
     table=null;
   }        

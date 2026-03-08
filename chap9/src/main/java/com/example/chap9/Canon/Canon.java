@@ -15,7 +15,7 @@ class ExpCall extends com.example.chap7.Tree.Stm {
   ExpCall(com.example.chap7.Tree.CALL c) {call=c;}
   public com.example.chap7.Tree.ExpList kids() {return call.kids();}
   public com.example.chap7.Tree.Stm build(com.example.chap7.Tree.ExpList kids) {
-	return new com.example.chap7.Tree.EXP(call.build(kids));
+	return new com.example.chap7.Tree.ExpStmt(call.build(kids));
   }
 }   
   
@@ -28,8 +28,8 @@ class StmExpList {
 public class Canon {
   
  static boolean isNop(com.example.chap7.Tree.Stm a) {
-   return a instanceof com.example.chap7.Tree.EXP
-          && ((com.example.chap7.Tree.EXP)a).exp instanceof com.example.chap7.Tree.CONST;
+   return a instanceof com.example.chap7.Tree.ExpStmt
+          && ((com.example.chap7.Tree.ExpStmt)a).exp instanceof com.example.chap7.Tree.CONST;
  }
 
  static com.example.chap7.Tree.Stm seq(com.example.chap7.Tree.Stm a, com.example.chap7.Tree.Stm b) {
@@ -60,7 +60,7 @@ public class Canon {
 	else return reorder_stm(s);
  }
 
- static com.example.chap7.Tree.Stm do_stm(com.example.chap7.Tree.EXP s) { 
+ static com.example.chap7.Tree.Stm do_stm(com.example.chap7.Tree.ExpStmt s) { 
 	if (s.exp instanceof com.example.chap7.Tree.CALL)
 	       return reorder_stm(new ExpCall((com.example.chap7.Tree.CALL)s.exp));
 	else return reorder_stm(s);
@@ -69,7 +69,7 @@ public class Canon {
  static com.example.chap7.Tree.Stm do_stm(com.example.chap7.Tree.Stm s) {
      if (s instanceof com.example.chap7.Tree.SEQ) return do_stm((com.example.chap7.Tree.SEQ)s);
      else if (s instanceof com.example.chap7.Tree.MOVE) return do_stm((com.example.chap7.Tree.MOVE)s);
-     else if (s instanceof com.example.chap7.Tree.EXP) return do_stm((com.example.chap7.Tree.EXP)s);
+     else if (s instanceof com.example.chap7.Tree.ExpStmt) return do_stm((com.example.chap7.Tree.ExpStmt)s);
      else return reorder_stm(s);
  }
 
@@ -94,7 +94,7 @@ public class Canon {
      return new com.example.chap7.Tree.ESEQ(x.stm, e.build(x.exps));
  }
 
- static StmExpList nopNull = new StmExpList(new com.example.chap7.Tree.EXP(new com.example.chap7.Tree.CONST(0)),null);
+ static StmExpList nopNull = new StmExpList(new com.example.chap7.Tree.ExpStmt(new com.example.chap7.Tree.CONST(0)),null);
 
  static StmExpList reorder(com.example.chap7.Tree.ExpList exps) {
      if (exps==null) return nopNull;

@@ -13,4 +13,22 @@
 
     <artifactId>chap10</artifactId>
     <name>Chapter 10 - Liveness Analysis and Register Allocation</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap9</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap7</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap6</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,8 +1,9 @@
 package com.example.chap10.FlowGraph;
-import com.example.chap10.Temp.TempList;
-import com.example.chap10.Temp.Temp;
-import com.example.chap10.com.example.chap10.Graph.NodeList;
-import com.example.chap10.com.example.chap10.Graph.Node;
+import com.example.chap6.Temp.TempList;
+import com.example.chap6.Temp.Temp;
+import com.example.chap10.Graph.NodeList;
+import com.example.chap10.Graph.Node;
+import com.example.chap10.Graph.Graph;
 
 /**
  * A control flow graph is a directed graph in which each edge
@@ -14,7 +15,7 @@ import com.example.chap10.com.example.chap10.Graph.Node;
  * @see AssemFlowGraph
  */
 
-public abstract class FlowGraph extends com.example.chap10.Graph.Graph {
+public abstract class FlowGraph extends Graph {
  /**
   * The set of temporaries defined by this instruction or block 
   */

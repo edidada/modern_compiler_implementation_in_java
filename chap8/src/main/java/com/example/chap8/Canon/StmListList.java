@@ -1,8 +1,10 @@
 package com.example.chap8.Canon;
 
+import com.example.chap7.Tree.StmList;
+
 public class StmListList {
-  public com.example.chap7.Tree.StmList head;
+  public StmList head;
   public StmListList tail;
-  public StmListList(com.example.chap7.Tree.StmList h, StmListList t) {head=h; tail=t;}
+  public StmListList(StmList h, StmListList t) {head=h; tail=t;}
 }
 
