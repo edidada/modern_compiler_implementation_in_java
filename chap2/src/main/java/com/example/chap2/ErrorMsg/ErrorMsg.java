@@ -31,6 +31,29 @@ public class ErrorMsg {
 
 	System.out.println(filename + ":" + sayPos + ": " + msg);
   }
+  
+  public void newline(long pos) {
+     lineNum++;
+     linePos = new LineList((int)pos,linePos);
+  }
+  
+  public void error(long pos, String msg) {
+	int n = lineNum;
+        LineList p = linePos;
+	String sayPos="0.0";
+
+	anyErrors=true;
+
+        while (p!=null) {
+          if (p.head<pos) {
+	     sayPos = ":" + String.valueOf(n) + "." + String.valueOf(pos-p.head);
+	     break;
+          }
+	  p=p.tail; n--;
+        }
+
+	System.out.println(filename + ":" + sayPos + ": " + msg);
+  }
 }
 
 class LineList {

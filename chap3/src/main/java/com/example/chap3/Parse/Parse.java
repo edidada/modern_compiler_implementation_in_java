@@ -1,17 +1,22 @@
 package com.example.chap3.Parse;
 
+import com.example.chap3.ErrorMsg.ErrorMsg;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+
 public class Parse {
 
-  public ErrorMsg.ErrorMsg errorMsg;
+  public ErrorMsg errorMsg;
 
   public Parse(String filename) {
-       errorMsg = new ErrorMsg.ErrorMsg(filename);
-       java.io.InputStream inp;
-       try {inp=new java.io.FileInputStream(filename);
+       errorMsg = new ErrorMsg(filename);
+       Reader inp;
+       try {inp=new FileReader(filename);
        } catch (java.io.FileNotFoundException e) {
 	 throw new Error("File not found: " + filename);
        }
-       Grm parser = new Grm(new Yylex(inp,errorMsg), errorMsg);
+       parser parser = new parser(new Yylex(inp,errorMsg), errorMsg);
 
       try {
           parser./*debug_*/parse();

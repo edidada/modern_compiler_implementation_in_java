@@ -1,16 +1,16 @@
 package com.example.chap2.Parse;
 
 import com.example.chap2.ErrorMsg.ErrorMsg;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Reader;
 
 public class Main {
 
   public static void main(String argv[]) throws IOException {
       String filename = argv[0];
       ErrorMsg errorMsg = new ErrorMsg(filename);
-      InputStream inp = new FileInputStream(filename);
+      Reader inp = new FileReader(filename);
       Lexer lexer = new Yylex(inp, errorMsg);
       java_cup.runtime.Symbol tok;
 
