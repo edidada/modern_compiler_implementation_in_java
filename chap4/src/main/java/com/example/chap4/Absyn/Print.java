@@ -54,7 +54,7 @@ public class Print {
     else throw new Error("Print.prVar");
   }
   
-  void prExp(OpExp e, int d) {
+  void prExpOp(OpExp e, int d) {
     sayln("OpExp(");
     indent(d+1); 
     switch(e.oper) {
@@ -76,45 +76,45 @@ public class Print {
     prExp(e.right, d+1); say(")");
   }
 
-  void prExp(VarExp e, int d) {
+  void prExpVar(VarExp e, int d) {
     sayln("varExp("); prVar(e.var, d+1);
     say(")");
   }
 
-  void prExp(NilExp e, int d) {
+  void prExpNil(NilExp e, int d) {
     say("NilExp()");
   }
 
-  void prExp(IntExp e, int d) {
+  void prExpInt(IntExp e, int d) {
     say("IntExp("); say(e.value); say(")");
   }
 
-  void prExp(StringExp e, int d) {
+  void prExpString(StringExp e, int d) {
     say("StringExp("); say(e.value); say(")");
   }
 
-  void prExp(CallExp e, int d) {
+  void prExpCall(CallExp e, int d) {
     say("CallExp("); say(e.func.toString()); sayln(",");
     prExplist(e.args, d+1); say(")");
   }
 
-  void prExp(RecordExp e, int d) {
+  void prExpRecord(RecordExp e, int d) {
     say("RecordExp("); say(e.typ.toString());  sayln(",");
     prFieldExpList(e.fields, d+1); say(")");
   }
 
-  void prExp(SeqExp e, int d) {
+  void prExpSeq(SeqExp e, int d) {
     sayln("SeqExp(");
     prExplist(e.list, d+1); say(")");
   }
 
-  void prExp(AssignExp e, int d) {
+  void prExpAssign(AssignExp e, int d) {
     sayln("AssignExp(");
     prVar(e.var, d+1); sayln(",");
     prExp(e.exp, d+1); say(")");
   }
   
-  void prExp(IfExp e, int d) {
+  void prExpIf(IfExp e, int d) {
     sayln("IfExp(");
     prExp(e.test, d+1); sayln(",");
     prExp(e.thenclause, d+1);
@@ -125,53 +125,53 @@ public class Print {
     say(")");
   }
 
-  void prExp(WhileExp e, int d) {
+  void prExpWhile(WhileExp e, int d) {
     sayln("WhileExp(");
     prExp(e.test, d+1); sayln(",");
     prExp(e.body, d+1); sayln(")");
   }
 
-  void prExp(ForExp e, int d) {
+  void prExpFor(ForExp e, int d) {
     sayln("ForExp("); 
     indent(d+1); prDec(e.var, d+1); sayln(",");
     prExp(e.hi, d+1); sayln(",");
     prExp(e.body, d+1); say(")");
   }
 
-  void prExp(BreakExp e, int d) {
+  void prExpBreak(BreakExp e, int d) {
     say("BreakExp()");
   }
 
-  void prExp(LetExp e, int d) {
+  void prExpLet(LetExp e, int d) {
     say("LetExp("); sayln("");
     prDecList(e.decs, d+1); sayln(",");
     prExp(e.body, d+1); say(")");
   }
 
-  void prExp(ArrayExp e, int d) {
+  void prExpArray(ArrayExp e, int d) {
     say("ArrayExp("); say(e.typ.toString()); sayln(",");
     prExp(e.size, d+1); sayln(",");
     prExp(e.init, d+1); say(")");
   }
 
   /* Print Exp class types. Indent d spaces. */
-  public void prExp(Absyn.Exp e, int d) {
+  public void prExp(Exp e, int d) {
     indent(d);
-    if (e instanceof OpExp) prExp((OpExp)e, d);
-    else if (e instanceof VarExp) prExp((VarExp) e, d);
-    else if (e instanceof NilExp) prExp((NilExp) e, d);
-    else if (e instanceof IntExp) prExp((IntExp) e, d);
-    else if (e instanceof StringExp) prExp((StringExp) e, d);
-    else if (e instanceof CallExp) prExp((CallExp) e, d);
-    else if (e instanceof RecordExp) prExp((RecordExp) e, d);
-    else if (e instanceof SeqExp) prExp((SeqExp) e, d);
-    else if (e instanceof AssignExp) prExp((AssignExp) e, d);
-    else if (e instanceof IfExp) prExp((IfExp) e, d);
-    else if (e instanceof WhileExp) prExp((WhileExp) e, d);
-    else if (e instanceof ForExp) prExp((ForExp) e, d);
-    else if (e instanceof BreakExp) prExp((BreakExp) e, d);
-    else if (e instanceof LetExp) prExp((LetExp) e, d);
-    else if (e instanceof ArrayExp) prExp((ArrayExp) e, d);
+    if (e instanceof OpExp) prExpOp((OpExp)e, d);
+    else if (e instanceof VarExp) prExpVar((VarExp) e, d);
+    else if (e instanceof NilExp) prExpNil((NilExp) e, d);
+    else if (e instanceof IntExp) prExpInt((IntExp) e, d);
+    else if (e instanceof StringExp) prExpString((StringExp) e, d);
+    else if (e instanceof CallExp) prExpCall((CallExp) e, d);
+    else if (e instanceof RecordExp) prExpRecord((RecordExp) e, d);
+    else if (e instanceof SeqExp) prExpSeq((SeqExp) e, d);
+    else if (e instanceof AssignExp) prExpAssign((AssignExp) e, d);
+    else if (e instanceof IfExp) prExpIf((IfExp) e, d);
+    else if (e instanceof WhileExp) prExpWhile((WhileExp) e, d);
+    else if (e instanceof ForExp) prExpFor((ForExp) e, d);
+    else if (e instanceof BreakExp) prExpBreak((BreakExp) e, d);
+    else if (e instanceof LetExp) prExpLet((LetExp) e, d);
+    else if (e instanceof ArrayExp) prExpArray((ArrayExp) e, d);
     else throw new Error("Print.prExp");
   }
 

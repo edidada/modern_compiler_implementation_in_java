@@ -13,4 +13,12 @@
 
     <artifactId>chap5</artifactId>
     <name>Chapter 5 - Type Checking</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>chap4</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

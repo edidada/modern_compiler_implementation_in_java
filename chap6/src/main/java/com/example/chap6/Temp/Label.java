@@ -1,5 +1,5 @@
 package com.example.chap6.Temp;
-import com.example.chap6.Symbol.Symbol;
+import com.example.chap4.Symbol.Symbol;
 
 /**
  * A Label represents an address in assembly language.

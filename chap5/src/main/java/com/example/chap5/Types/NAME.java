@@ -1,9 +1,11 @@
 package com.example.chap5.Types;
 
+import com.example.chap4.Symbol.Symbol;
+
 public class NAME extends Type {
-   public Symbol.Symbol name;
+   public Symbol name;
    private Type binding;
-   public NAME(Symbol.Symbol n) {name=n;}
+   public NAME(Symbol n) {name=n;}
    public boolean isLoop() {
       Type b = binding; 
       boolean any;

@@ -1,6 +1,6 @@
 package com.example.chap4.Parse;
 
-class Token extends java_cup.runtime.token {
+class Token extends java_cup.runtime.Symbol {
   int left,right;
   Token(int l, int r, int kind) {
    super(kind);
